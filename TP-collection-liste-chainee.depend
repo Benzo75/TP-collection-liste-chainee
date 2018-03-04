@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1520202803 source:c:\users\benoît clemenceau\desktop\tp-collection-liste-chainee\main.c
+	"header.h"
+
+1520202831 c:\users\benoît clemenceau\desktop\tp-collection-liste-chainee\header.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<conio.h>
+
