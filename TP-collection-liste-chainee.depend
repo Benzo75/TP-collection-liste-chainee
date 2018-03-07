@@ -1,11 +1,18 @@
 # depslib dependency file v1.0
-1520425847 source:c:\users\benoît clemenceau\desktop\tp-collection-liste-chainee\main.c
+1520462781 source:c:\users\benoît clemenceau\desktop\tp-collection-liste-chainee\main.c
 	"header.h"
 
-1520421687 c:\users\benoît clemenceau\desktop\tp-collection-liste-chainee\header.h
+1520455315 c:\users\benoît clemenceau\desktop\tp-collection-liste-chainee\header.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
-	<time.h>
-	<conio.h>
+
+1520454936 source:c:\users\benoît clemenceau\desktop\tp-collection-liste-chainee\utilitaires.c
+	"header.h"
+
+1520463073 source:c:\users\benoît clemenceau\desktop\tp-collection-liste-chainee\fichier.c
+	"header.h"
+
+1520455460 source:c:\users\benoît clemenceau\desktop\tp-collection-liste-chainee\liste.c
+	"header.h"
 
