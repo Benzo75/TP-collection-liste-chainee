@@ -48,4 +48,6 @@ t_collec* initCollec();
 ///Fonction d'affichage de la collection :
 void affichageCollec(t_collec* collec);
 
+void ajoutCarte(t_collec* collec);
+
 #endif // HEADER_H_INCLUDED
