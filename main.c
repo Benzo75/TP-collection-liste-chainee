@@ -231,7 +231,7 @@ void ajoutCarte(t_collec* collec)
         exit(EXIT_FAILURE); ///On quitte.
     }
 
-    ///On va maintenant demander à l'utilisateur de rentrer les champs de la nouvelle carte :
+      ///On va maintenant demander à l'utilisateur de rentrer les champs de la nouvelle carte :
 
     printf(" Nom : ");
     viderBuffer();
@@ -289,13 +289,17 @@ void sauvegarde(t_collec* collec)
 
     courant = collec->first;    ///On pointe sur la première cellule.
 
-    fprintf(sauvegarde, "%s\n%d\n%s\n%s\n%s\n%d\n%d\n%d\n%d\n%d\n%d", courant->nom, courant->note, courant->poste, courant->club, courant->pays, courant->stats.vit, courant->stats.dri, courant->stats.tir, courant->stats.def, courant->stats.pas, courant->stats.phy);
+    fprintf(sauvegarde, "%s\n%d\n%s\n%s\n%s\n%d\n%d\n%d\n%d\n%d\n%d\n", courant->nom, courant->note, courant->poste, courant->club, courant->pays, courant->stats.vit, courant->stats.dri, courant->stats.tir, courant->stats.def, courant->stats.pas, courant->stats.phy);
+
+///Sauvegarde des autres
+while(courant->next != NULL)
+{
+
+    courant=courant->next;
+    fprintf(sauvegarde, "%s\n%d\n%s\n%s\n%s\n%d\n%d\n%d\n%d\n%d\n%d\n", courant->nom, courant->note, courant->poste, courant->club, courant->pays, courant->stats.vit, courant->stats.dri, courant->stats.tir, courant->stats.def, courant->stats.pas, courant->stats.phy);
+
+}
 
 fclose(sauvegarde);
-
-
-
-
-
 
 }
