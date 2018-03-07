@@ -45,6 +45,10 @@ break;
         }
 
         //case 5 : supprimer();
+
+        case 6 :
+            sauvegarde(collec);
+            break;
         default :
             break;
         }
@@ -89,7 +93,7 @@ int menu()
     printf(" 4 - Ajouter une carte\n");
     printf(" 5 - Supprimer une carte\n\n");
 
-    printf(" 6 - Quitter l'application\n\n");
+    printf(" 6 - Sauvegarder et quitter\n\n");
 
     printf(" Que voulez-vous faire ?\n");
     scanf("%d",&choix);
@@ -183,6 +187,7 @@ void affichageCollec(t_collec* collec)
     }
 }
 
+///Fonction tirée d'un utilisateur d'un forum pour vider le buffer de la saisie.
 void viderBuffer()
 {
     int c = 0;
@@ -213,7 +218,7 @@ int lire(char *chaine, int longueur)
     }
 }
 
-
+///Fonction pour ajouter une carte (au début de la liste).
 void ajoutCarte(t_collec* collec)
 {
     char transition[100];
@@ -269,5 +274,28 @@ void ajoutCarte(t_collec* collec)
      ///Modification des pointeurs :
      newCarte->next = collec->first;
      collec->first = newCarte;
+
+}
+
+///Fonction de sauvegarde de la collection dans un fichier.
+void sauvegarde(t_collec* collec)
+{
+    FILE* sauvegarde;   ///Déclaration d'un pointeur sur fichier.
+    t_carte* courant;   ///Déclaration d'un pointeur sur la carte à sauvegarder.
+
+    sauvegarde = fopen("sauvegarde.txt", "w");  ///On ouvre le fichier de sauvegarde (on le crée s'il n'existe pas et on le remplace s'il existait déjà).
+
+    ///Sauvegarde de la première carte :
+
+    courant = collec->first;    ///On pointe sur la première cellule.
+
+    fprintf(sauvegarde, "%s\n%d\n%s\n%s\n%s\n%d\n%d\n%d\n%d\n%d\n%d", courant->nom, courant->note, courant->poste, courant->club, courant->pays, courant->stats.vit, courant->stats.dri, courant->stats.tir, courant->stats.def, courant->stats.pas, courant->stats.phy);
+
+fclose(sauvegarde);
+
+
+
+
+
 
 }

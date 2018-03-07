@@ -43,11 +43,20 @@ t_carte* last;
 
 ///Fonction d'affichage du menu (retourne le choix) :
 int menu();
+
 ///Fonction d'initialisation de la collection (retourne un pointeur sur l'ancre) :
 t_collec* initCollec();
+
 ///Fonction d'affichage de la collection :
 void affichageCollec(t_collec* collec);
 
+///Fonction tirée d'un utilisateur d'un forum pour vider le buffer de la saisie.
+void viderBuffer();
+
+///Fonction tirée d'un cours OpenOffice sur la saisie de texte sécuriséé, elle permet la suppression du "\n" capté par la fonction fgets.
+int lire(char *chaine, int longueur);
+
+///Fonction pour ajouter une carte (au début de la liste).
 void ajoutCarte(t_collec* collec);
 
 #endif // HEADER_H_INCLUDED
