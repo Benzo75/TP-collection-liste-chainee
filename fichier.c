@@ -12,25 +12,19 @@ void sauvegarde(t_collec* collec)
     {
         exit(EXIT_FAILURE); ///On quitte le programme.
     }
-printf("test1");
     ///Sauvegarde de la première carte :
 
     courant = collec->first;    ///On pointe sur la première cellule.
-printf("test2");
     fprintf(sauvegarde, "%s\n%d\n%s\n%s\n%s\n%d\n%d\n%d\n%d\n%d\n%d\n", courant->nom, courant->note, courant->poste, courant->club, courant->pays, courant->stats.vit, courant->stats.dri, courant->stats.tir, courant->stats.def, courant->stats.pas, courant->stats.phy);
-printf("test3");
 ///Sauvegarde des autres
     while(courant->next != NULL)
     {
-printf("test4");
+
         courant = courant->next;
-        printf("test a");
         fprintf(sauvegarde, "%s\n%d\n%s\n%s\n%s\n%d\n%d\n%d\n%d\n%d\n%d\n", courant->nom, courant->note, courant->poste, courant->club, courant->pays, courant->stats.vit, courant->stats.dri, courant->stats.tir, courant->stats.def, courant->stats.pas, courant->stats.phy);
-printf("test5");
     }
 
     fclose(sauvegarde);
-    printf("test6");
 }
 
 
@@ -41,7 +35,7 @@ void lectureSauvegarde(t_collec* collec)
     char transition[100];
     t_carte* carte;
 
-
+    int a; ///Variable de parcours de ma chaîne de transition pour en lever le "\n".
 
     FILE* sauvegarde;   ///Déclaration d'un pointeur sur fichier.
     //t_carte* courant;   ///Déclaration d'un pointeur sur la carte à sauvegarder.
@@ -64,29 +58,40 @@ void lectureSauvegarde(t_collec* collec)
         {
             carte = initCarte();  ///On initialise une carte.
             carte->nom = malloc((strlen(transition)+1)*sizeof(char));
+            a = strlen(transition)-1;
+            transition[a]='\0';
             strcpy(carte->nom, transition);
+
 
         }
         if(i%11 == 2)   ///Si c'est la ligne 2, 13, 24, 35...
         {
             carte->note = atoi(transition);
 
+
         }
         if(i%11 == 3)   ///Si c'est la ligne 3, 14, 25, 36...
         {
             carte->poste = malloc((strlen(transition)+1)*sizeof(char));
+            a = strlen(transition)-1;
+            transition[a]='\0';
             strcpy(carte->poste, transition);
+
 
         }
         if(i%11 == 4)   ///Si c'est la ligne 4, 15, 26, 37...
         {
             carte->club = malloc((strlen(transition)+1)*sizeof(char));
+            a = strlen(transition)-1;
+            transition[a]='\0';
             strcpy(carte->club, transition);
 
         }
         if(i%11 == 5)   ///Si c'est la ligne 5, 16, 27, 38...
         {
             carte->pays = malloc((strlen(transition)+1)*sizeof(char));
+            a = strlen(transition)-1;
+            transition[a]='\0';
             strcpy(carte->pays, transition);
 
         }

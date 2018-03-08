@@ -126,7 +126,7 @@ void affichageCollec(t_collec* collec)
 
 
 
-    while(carteActuelle->next != NULL)
+    while(carteActuelle->next != NULL)  ///Tant qu'on est pas à la dernière carte :
     {
 
         printf("\t\t%s\n\n", carteActuelle->nom);
@@ -140,6 +140,18 @@ void affichageCollec(t_collec* collec)
 
 
         carteActuelle = carteActuelle->next;
+    }
+    if(carteActuelle->next == NULL) ///Si on est à la dernière carte :
+    {
+
+        printf("\t\t%s\n\n", carteActuelle->nom);
+
+        printf(" Note g%cn%crale : %d\n", 130, 130, carteActuelle->note);
+        printf(" Poste : %s\n", carteActuelle->poste);
+        printf("  Club : %s\n", carteActuelle->club);
+        printf("  Pays : %s\n", carteActuelle->pays);
+
+        printf(" Stats : %d VIT, %d DRI, %d TIR, %d DEF, %d PAS, %d PHY.\n\n\n", carteActuelle->stats.vit, carteActuelle->stats.dri, carteActuelle->stats.tir, carteActuelle->stats.def, carteActuelle->stats.pas, carteActuelle->stats.phy);
 
     }
 }

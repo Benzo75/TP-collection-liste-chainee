@@ -11,6 +11,9 @@ t_collec* initCollec()
         exit(EXIT_FAILURE); ///On quitte le programme.
     }
 
+    collec->first = NULL;
+    collec->last = NULL;
+
     return collec;
 }
 
@@ -95,16 +98,15 @@ void insertionDebut(t_collec* collec, t_carte* newCarte)
 {
     if(collec->first == NULL)
     {
+        newCarte->next = NULL;
         collec->first = newCarte;
         collec->last = newCarte;
     }
-    if(collec->first != NULL)
+    else if(collec->first != NULL)
     {
         newCarte->next = collec->first;
         collec->first = newCarte;
     }
 }
-
-
 
 
