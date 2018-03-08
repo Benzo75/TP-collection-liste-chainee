@@ -32,3 +32,15 @@ int lire(char *chaine, int longueur)
     }
 }
 
+
+///Fonction qui affiche un trait sur l'écran.
+void trait(void)
+{
+    int i;
+
+    for(i=0; i<100; i++) ///On tire un trait
+    {
+        printf("%c",196);
+    }
+    printf("\n");
+}
