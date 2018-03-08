@@ -38,17 +38,12 @@ void lectureSauvegarde(t_collec* collec)
     int a; ///Variable de parcours de ma chaîne de transition pour en lever le "\n".
 
     FILE* sauvegarde;   ///Déclaration d'un pointeur sur fichier.
-    //t_carte* courant;   ///Déclaration d'un pointeur sur la carte à sauvegarder.
-
     sauvegarde = fopen("sauvegarde.txt", "r");  ///On ouvre le fichier de sauvegarde (en lecture seule).
 
     if(sauvegarde == NULL) ///Si le fichier s'est mal ouvert :
     {
         exit(EXIT_FAILURE); ///On quitte le programme.
     }
-
-
-
 
     while(fgets(transition, 100, sauvegarde) != NULL)   ///Tant qu'on a pas atteint la fin du fichier, on copie une ligne dans transition et :
     {
@@ -61,14 +56,10 @@ void lectureSauvegarde(t_collec* collec)
             a = strlen(transition)-1;
             transition[a]='\0';
             strcpy(carte->nom, transition);
-
-
         }
         if(i%11 == 2)   ///Si c'est la ligne 2, 13, 24, 35...
         {
             carte->note = atoi(transition);
-
-
         }
         if(i%11 == 3)   ///Si c'est la ligne 3, 14, 25, 36...
         {
@@ -76,8 +67,6 @@ void lectureSauvegarde(t_collec* collec)
             a = strlen(transition)-1;
             transition[a]='\0';
             strcpy(carte->poste, transition);
-
-
         }
         if(i%11 == 4)   ///Si c'est la ligne 4, 15, 26, 37...
         {
@@ -85,7 +74,6 @@ void lectureSauvegarde(t_collec* collec)
             a = strlen(transition)-1;
             transition[a]='\0';
             strcpy(carte->club, transition);
-
         }
         if(i%11 == 5)   ///Si c'est la ligne 5, 16, 27, 38...
         {
@@ -93,41 +81,32 @@ void lectureSauvegarde(t_collec* collec)
             a = strlen(transition)-1;
             transition[a]='\0';
             strcpy(carte->pays, transition);
-
         }
         if(i%11 == 6)   ///Si c'est la ligne 6, 17, 28, 39...
         {
             carte->stats.vit = atoi(transition);
-
         }
         if(i%11 == 7)   ///Si c'est la ligne 7, 18, 29, 40...
         {
             carte->stats.dri = atoi(transition);
-
         }
         if(i%11 == 8)   ///Si c'est la ligne 8, 19, 30, 41...
         {
             carte->stats.tir = atoi(transition);
-
         }
         if(i%11 == 9)   ///Si c'est la ligne 9, 20, 31, 42...
         {
             carte->stats.def = atoi(transition);
-
         }
         if(i%11 == 10)   ///Si c'est la ligne 10, 21, 32, 43...
         {
             carte->stats.pas = atoi(transition);
-
         }
         if(i%11 == 0)   ///Si c'est la ligne 11, 22, 33, 44...
         {
             carte->stats.phy = atoi(transition);
-
             insertionDebut(collec, carte);
-
         }
-
     }
     fclose(sauvegarde);
 }
