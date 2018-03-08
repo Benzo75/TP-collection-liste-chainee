@@ -4,36 +4,36 @@
 	<ActiveTarget name="Debug" />
 	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3624" topLine="44" />
-		</Cursor>
-		<Folding>
-			<Collapse line="66" />
-		</Folding>
-	</File>
-	<File name="utilitaires.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="217" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="header.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="116" topLine="0" />
+			<Cursor1 position="3693" topLine="14" />
 		</Cursor>
 	</File>
 	<File name="fichier.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1332" topLine="11" />
+			<Cursor1 position="1332" topLine="6" />
 		</Cursor>
 	</File>
-	<File name="liste.c" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="header.h" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="118" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+			<Collapse line="21" />
+			<Collapse line="35" />
+		</Folding>
+	</File>
+	<File name="liste.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2979" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="4" />
 			<Collapse line="22" />
-			<Collapse line="39" />
-			<Collapse line="97" />
 		</Folding>
+	</File>
+	<File name="utilitaires.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="217" topLine="0" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
