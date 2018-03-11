@@ -11,7 +11,7 @@ void viderBuffer()
 }
 
 
-///Fonction tirée d'un cours OpenOffice sur la saisie de texte sécuriséé, elle permet la suppression du "\n" capté par la fonction fgets.
+///Fonction tirée d'un cours OpenOffice sur la saisie de texte sécuriséé, elle permet la suppression du "\n" capté par la fonction fgets R(0 si bon, 1 si erreur) P(la chaine dans laquelle on écrit, la longueur max).
 int lire(char *chaine, int longueur)
 {
     char *positionEntree = NULL;
@@ -44,3 +44,4 @@ void trait(void)
     }
     printf("\n");
 }
+

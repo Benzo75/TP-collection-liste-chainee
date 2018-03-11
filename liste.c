@@ -1,6 +1,6 @@
 #include "header.h"
 
-///Fonction d'initialisation de la collection (retourne un pointeur sur l'ancre).
+///Fonction d'initialisation de la collection R(pointeur sur la collection).
 t_collec* initCollec()
 {
     t_collec* collec;
@@ -18,7 +18,7 @@ t_collec* initCollec()
 }
 
 
-///Fonction d'initialisation d'une carte (retourne un pointeur sur la carte).
+///Fonction d'initialisation d'une carte R(pointeur sur la carte).
 t_carte* initCarte()
 {
     t_carte* carte;
@@ -35,11 +35,28 @@ t_carte* initCarte()
 }
 
 
-///Fonction pour ajouter une carte (au début de la liste).
+///Fonction pour ajouter une carte en début de liste P(la collection).
 void ajoutCarte(t_collec* collec)
 {
     char transition[100];
+    int nomUnique = 0;
+    t_carte* current = collec->first;   ///On déclare un pointeur sur carte et on l'initialise sur la première carte.
+    int i = 0;  ///Compteur du nombre de cartes.
 
+    ///Test pour savoir si la limite de cartes n'est pas atteinte (limite = 100) :
+    while(current != NULL)
+    {
+     i++;   ///On incrémente le compteur de carte.
+     current = current->next;   ///on passe à la carte suivante.
+    }
+    if(i >= 100)
+    {
+        printf("La limite de carte (100) est atteinte !\n");
+        trait();
+    }
+
+    else    ///Si la limite n'est pas atteinte :
+    {
     t_carte* newCarte=NULL;
     newCarte = (t_carte*) malloc(sizeof(t_carte));  ///Alloc dynamique d'une nouvelle carte.
 
@@ -50,9 +67,25 @@ void ajoutCarte(t_collec* collec)
 
     ///On va maintenant demander à l'utilisateur de rentrer les champs de la nouvelle carte :
 
-    printf(" Nom : ");
     viderBuffer();
+
+    while(nomUnique == 0)
+    {
+        printf(" Nom : ");
+
     lire(transition, 100);
+    if(checkNom(collec, transition) != NULL)
+        {
+            printf("Une carte ayant ce nom existe d%cj%c !\n", 130, 133);
+
+            nomUnique = 0;
+        }
+        else
+        {
+            nomUnique = 1;
+        }
+    }
+
     newCarte->nom = malloc((strlen(transition)+1)*sizeof(char));
     strcpy(newCarte->nom, transition);
 
@@ -89,11 +122,12 @@ void ajoutCarte(t_collec* collec)
     scanf("%d", &newCarte->stats.phy);
 
     insertionDebut(collec, newCarte);
+    }
 
 }
 
 
-///Fonction d'insertion d'une carte en début de liste.
+///Fonction d'insertion d'une carte en début de liste P(la collection).
 void insertionDebut(t_collec* collec, t_carte* newCarte)
 {
     if(collec->first == NULL)
@@ -110,408 +144,76 @@ void insertionDebut(t_collec* collec, t_carte* newCarte)
 }
 
 
-///Fonction de recherche d'une fiche par son nom.
-t_carte* rechercheNom(t_collec* collec)
+///Fonction d'insertion d'une carte en fin de liste P(la collection).
+void insertionFin(t_collec* collec, t_carte* newCarte)
 {
-    char target[100];
-    t_carte* current;
-    t_carte* carte;
-    int found = 0;
+    t_carte* current = collec->last;    ///On déclare un pointeur sur une carte courant et on l'initialise  sur la dernière carte.
 
-    printf("\nEntrez le nom %c rechercher : ", 133);
-    fgets(target, 100, stdin);
-    target[strlen(target)-1]='\0';     ///Retire le "\n" à la fin de la chaîne saisie.
-
-    current = collec->first;
-
-    while(found == 0 && current != NULL)
+    if(collec->first == NULL)   ///Si la liste est vide :
     {
-
-        if(strcmp(current->nom, target) == 0)
-        {
-            carte = current;
-            found = 1;
-        }
-        else
-        {
-            current = current->next;
-        }
+        newCarte->next = NULL;
+        collec->first = newCarte;
+        collec->last = newCarte;
     }
-    if(found == 0 && current == NULL)
+    else if(collec->first != NULL)  ///Sinon :
     {
-        printf("Aucune carte n'ayant ce nom n'a %ct%c trouv%ce.", 130, 130, 130);
-        carte = rechercheNom(collec);
-    }
-
-    return carte;
-}
-
-
-///Fonction de recherche de fiches par leur note générale.
-void rechercheNote(t_collec* collec)
-{
-    int target;
-    t_carte* current;
-    int found = 0;
-
-    printf("Entrez la note %c rechercher : ", 133);
-    scanf("%d", &target);
-
-    current = collec->first;
-
-    while(current != NULL)
-    {
-
-        if(current->note == target)
-        {
-            found++;
-            afficherCarte(current);
-        }
-
-        current = current->next;
-
-    }
-
-    if(found == 0 && current == NULL)
-    {
-        printf("Aucune carte n'ayant cette note g%cn%crale n'a %ct%c trouv%ce.", 130, 130, 130, 130, 130);
-        rechercheNote(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant cette note g%cn%crale ont %ct%c trouv%ces.\n", found, 130, 130, 130, 130, 130);
+        current->next = newCarte;
+        collec->last = newCarte;
     }
 }
 
 
-///Fonction de recherche de fiches par leur poste.
-void recherchePoste(t_collec* collec)
+///Fonction de suppression d'une carte P(la collection, la carte à supprimer).
+void supprimer(t_collec* collec, t_carte* carte)
 {
-    char target[100];
-    t_carte* current;
-    int found = 0;
+    int done = 0;
+    t_carte* current = collec->first;   ///On déclare un pointeur de parcours sur une carte, et on l'initialise sur la première carte.
 
-    printf("\nEntrez le poste %c rechercher : ", 133);
-    viderBuffer();
-    fgets(target, 100, stdin);
-    target[strlen(target)-1]='\0';     ///Retire le "\n" à la fin de la chaîne saisie.
-
-    current = collec->first;
-
-    while(current != NULL)
+    if(collec->first == carte)    ///Si la carte à supprimer est la première :
     {
-        if(strcmp(current->poste, target) == 0)
+        collec->first = current->next;  ///On fait pointer l'ancre sur la deuxième carte.
+        free(carte);    ///Et on supprime la première carte.
+    }
+    else if(carte->next != NULL)   ///Si la carte à supprimer n'est pas la première carte ni la dernière :
+    {
+        while(done == 0)
         {
-            found++;
-            afficherCarte(current);
+            if(current->next == carte)  ///Si la carte suivante est celle à supprimer :
+            {
+                current->next = carte->next;    ///On fait pointer la carte précédant celle à supprimer sur la carte suivant celle à supprimer.
+                free(carte->nom);
+                free(carte->poste);
+                free(carte->club);
+                free(carte->pays);
+                free(carte);    ///On supprime la carte.
+                done = 1;   ///On indique que c'est bon pour sortir de la boucle.
+            }
+            else    ///Si la carte à supprimer n'est pas la suivante.
+            {
+                current = current->next;    ///on passe à la carte suivante.
+            }
         }
-        current = current->next;
     }
-
-    if(found == 0 && current == NULL)
+    else    ///Si la carte à supprimer est la dernière :
     {
-        printf("Aucune carte n'ayant ce poste n'a %ct%c trouv%ce.", 130, 130, 130);
-        recherchePoste(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant ce poste ont %ct%c trouv%ces.\n", found, 130, 130, 130);
+        while(done == 0)
+        {
+            if(current->next == carte)  ///Si la carte suivante est celle à supprimer :
+            {
+                current->next = carte->next;    ///On fait pointer la carte précédant celle à supprimer sur la carte suivant celle à supprimer. (ici NULL)
+                free(carte->nom);
+                free(carte->poste);
+                free(carte->club);
+                free(carte->pays);
+                free(carte);    ///On supprime la carte.
+                collec->last = current; ///On indique que current est la dernière carte.
+                done = 1;   ///On indique que c'est bon pour sortir de la boucle.
+            }
+            else    ///Si la carte à supprimer n'est pas la suivante.
+            {
+                current = current->next;    ///on passe à la carte suivante.
+            }
+        }
     }
 }
-
-
-///Fonction de recherche de fiches par leur club.
-void rechercheClub(t_collec* collec)
-{
-    char target[100];
-    t_carte* current;
-    int found = 0;
-
-    printf("\nEntrez le club %c rechercher : ", 133);
-    viderBuffer();
-    fgets(target, 100, stdin);
-    target[strlen(target)-1]='\0';     ///Retire le "\n" à la fin de la chaîne saisie.
-
-    current = collec->first;
-
-    while(current != NULL)
-    {
-        if(strcmp(current->club, target) == 0)
-        {
-            found++;
-            afficherCarte(current);
-        }
-        current = current->next;
-    }
-
-    if(found == 0 && current == NULL)
-    {
-        printf("Aucune carte n'ayant ce club n'a %ct%c trouv%ce.", 130, 130, 130);
-        recherchePoste(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant ce club ont %ct%c trouv%ces.\n", found, 130, 130, 130);
-    }
-}
-
-
-///Fonction de recherche de fiches par leur pays.
-void recherchePays(t_collec* collec)
-{
-    char target[100];
-    t_carte* current;
-    int found = 0;
-
-    printf("\nEntrez le pays %c rechercher : ", 133);
-    viderBuffer();
-    fgets(target, 100, stdin);
-    target[strlen(target)-1]='\0';     ///Retire le "\n" à la fin de la chaîne saisie.
-
-    current = collec->first;
-
-    while(current != NULL)
-    {
-        if(strcmp(current->pays, target) == 0)
-        {
-            found++;
-            afficherCarte(current);
-        }
-        current = current->next;
-    }
-
-    if(found == 0 && current == NULL)
-    {
-        printf("Aucune carte n'ayant ce pays n'a %ct%c trouv%ce.", 130, 130, 130);
-        recherchePoste(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant ce pays ont %ct%c trouv%ces.\n", found, 130, 130, 130);
-    }
-}
-
-
-///Fonction de recherche de fiches par leur note de VIT.
-void rechercheVIT(t_collec* collec)
-{
-    int target;
-    t_carte* current;
-    int found = 0;
-
-    printf("Entrez la note de VIT %c rechercher : ", 133);
-    scanf("%d", &target);
-
-    current = collec->first;
-
-    while(current != NULL)
-    {
-
-        if(current->stats.vit == target)
-        {
-            found++;
-            afficherCarte(current);
-        }
-
-        current = current->next;
-
-    }
-
-    if(found == 0 && current == NULL)
-    {
-        printf("Aucune carte n'ayant cette note de VIT n'a %ct%c trouv%ce.\n", 130, 130, 130);
-        rechercheVIT(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant cette note de VIT ont %ct%c trouv%ces.\n", found, 130, 130, 130);
-    }
-}
-
-
-///Fonction de recherche de fiches par leur note de VIT.
-void rechercheDRI(t_collec* collec)
-{
-    int target;
-    t_carte* current;
-    int found = 0;
-
-    printf("Entrez la note de DRI %c rechercher : ", 133);
-    scanf("%d", &target);
-
-    current = collec->first;
-
-    while(current != NULL)
-    {
-
-        if(current->stats.dri == target)
-        {
-            found++;
-            afficherCarte(current);
-        }
-
-        current = current->next;
-
-    }
-
-    if(found == 0 && current == NULL)
-    {
-        printf("Aucune carte n'ayant cette note de DRI n'a %ct%c trouv%ce.\n", 130, 130, 130);
-        rechercheDRI(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant cette note de DRI ont %ct%c trouv%ces.\n", found, 130, 130, 130);
-    }
-}
-
-
-///Fonction de recherche de fiches par leur note de VIT.
-void rechercheTIR(t_collec* collec)
-{
-    int target;
-    t_carte* current;
-    int found = 0;
-
-    printf("Entrez la note de TIR %c rechercher : ", 133);
-    scanf("%d", &target);
-
-    current = collec->first;
-
-    while(current != NULL)
-    {
-
-        if(current->stats.tir == target)
-        {
-            found++;
-            afficherCarte(current);
-        }
-
-        current = current->next;
-
-    }
-
-    if(found == 0 && current == NULL)
-    {
-        printf("Aucune carte n'ayant cette note de TIR n'a %ct%c trouv%ce.\n", 130, 130, 130);
-        rechercheTIR(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant cette note de TIR ont %ct%c trouv%ces.\n", found, 130, 130, 130);
-    }
-}
-
-
-///Fonction de recherche de fiches par leur note de VIT.
-void rechercheDEF(t_collec* collec)
-{
-    int target;
-    t_carte* current;
-    int found = 0;
-
-    printf("Entrez la note de DEF %c rechercher : ", 133);
-    scanf("%d", &target);
-
-    current = collec->first;
-
-    while(current != NULL)
-    {
-
-        if(current->stats.def == target)
-        {
-            found++;
-            afficherCarte(current);
-        }
-
-        current = current->next;
-
-    }
-
-    if(found == 0 && current == NULL)
-    {
-        printf("Aucune carte n'ayant cette note de DEF n'a %ct%c trouv%ce.\n", 130, 130, 130);
-        rechercheDEF(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant cette note de DEF ont %ct%c trouv%ces.\n", found, 130, 130, 130);
-    }
-}
-
-///Fonction de recherche de fiches par leur note de VIT.
-void recherchePAS(t_collec* collec)
-{
-    int target;
-    t_carte* current;
-    int found = 0;
-
-    printf("Entrez la note de PAS %c rechercher : ", 133);
-    scanf("%d", &target);
-
-    current = collec->first;
-
-    while(current != NULL)
-    {
-
-        if(current->stats.pas == target)
-        {
-            found++;
-            afficherCarte(current);
-        }
-
-        current = current->next;
-
-    }
-
-    if(found == 0 && current == NULL)
-    {
-        printf("Aucune carte n'ayant cette note de PAS n'a %ct%c trouv%ce.\n", 130, 130, 130);
-        recherchePAS(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant cette note de PAS ont %ct%c trouv%ces.\n", found, 130, 130, 130);
-    }
-}
-
-///Fonction de recherche de fiches par leur note de VIT.
-void recherchePHY(t_collec* collec)
-{
-    int target;
-    t_carte* current;
-    int found = 0;
-
-    printf("Entrez la note de PHY %c rechercher : ", 133);
-    scanf("%d", &target);
-
-    current = collec->first;
-
-    while(current != NULL)
-    {
-
-        if(current->stats.phy == target)
-        {
-            found++;
-            afficherCarte(current);
-        }
-
-        current = current->next;
-
-    }
-
-    if(found == 0 && current == NULL)
-    {
-        printf("Aucune carte n'ayant cette note de PHY n'a %ct%c trouv%ce.\n", 130, 130, 130);
-        recherchePHY(collec);
-    }
-    if(found != 0 && current == NULL)
-    {
-        printf("\n %d cartes ayant cette note de PHY ont %ct%c trouv%ces.\n", found, 130, 130, 130);
-    }
-}
-
-
-
-
 

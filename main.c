@@ -1,6 +1,6 @@
 #include "header.h"
 
-int main()
+int main(void)
 {
     int choix=0;    ///Variable pour le choix du menu.
     int retour=0;   ///Variable "verrou" pour revenir au menu.
@@ -34,7 +34,13 @@ int main()
         case 4 :
             ajoutCarte(collec);
             break;
-        //case 5 : supprimer();
+        case 5 :
+            printf("Choisissez la carte %c supprimer :\n", 133);
+            viderBuffer();
+            supprimer(collec, rechercheNom(collec));
+            printf("\nLa carte a %ct%c supprim%ce.\n", 130, 130, 130);
+            trait();
+            break;
         case 6 :
             sauvegarde(collec);
             break;
@@ -46,8 +52,8 @@ int main()
 }
 
 
-///Fonction d'affichage du menu (retourne le choix) :
-int menu()
+///Fonction d'affichage du menu R(le choix).
+int menu(void)
 {
     int choix=0;  ///Variable choix utilisateur pour le switch.
     int i=0;  ///Variable pour les boucles.
@@ -95,7 +101,7 @@ int menu()
 }
 
 
-///Fonction d'affichage de la collection :
+///Fonction d'affichage de la collection P(la collection)
 void afficherCollec(t_collec* collec)
 {
     t_carte* carteActuelle = collec->first;
@@ -133,7 +139,7 @@ void afficherCollec(t_collec* collec)
 }
 
 
-///Fonction d'affichage d'une carte :
+///Fonction d'affichage d'une carte P(la carte).
 void afficherCarte(t_carte* carte)
 {
     printf("\n\t      [ %s ]\n\n", carte->nom);
@@ -147,7 +153,7 @@ void afficherCarte(t_carte* carte)
 }
 
 
-///Fonction pour le choix du type de recherche.
+///Fonction pour le choix du type de recherche P(la collection).
 void recherche(t_collec* collec)
 {
     int choixR=0;   ///Variable pour le choix du type de racherche.
@@ -181,14 +187,17 @@ void recherche(t_collec* collec)
         trait();
         break;
     case 3 :
+        viderBuffer();
         recherchePoste(collec);
         trait();
         break;
     case 4 :
+        viderBuffer();
         rechercheClub(collec);
         trait();
         break;
     case 5 :
+        viderBuffer();
         recherchePays(collec);
         trait();
         break;
@@ -218,3 +227,4 @@ void recherche(t_collec* collec)
         break;
     }
 }
+

@@ -1,6 +1,6 @@
 #include "header.h"
 
-///Fonction de sauvegarde de la collection dans un fichier.
+///Fonction de sauvegarde de la collection dans un fichier P(la collection).
 void sauvegarde(t_collec* collec)
 {
     FILE* sauvegarde;   ///Déclaration d'un pointeur sur fichier.
@@ -28,7 +28,7 @@ void sauvegarde(t_collec* collec)
 }
 
 
-///Fonction de lecture du fichier de sauvegarde.
+///Fonction de lecture du fichier de sauvegarde P(la collection).
 void lectureSauvegarde(t_collec* collec)
 {
     int i=0;    ///Variable compteur qui va permettre de savoir quoi faire en fonction du numéro de la ligne lue.
@@ -105,11 +105,9 @@ void lectureSauvegarde(t_collec* collec)
         if(i%11 == 0)   ///Si c'est la ligne 11, 22, 33, 44...
         {
             carte->stats.phy = atoi(transition);
-            insertionDebut(collec, carte);
+            insertionFin(collec, carte);
         }
     }
     fclose(sauvegarde);
 }
-
-
 
